@@ -32,158 +32,151 @@ describe('Create an order', () => {
         await phoneNumberButton.click();
         const phoneNumberModal = await $(page.phoneNumberModal);
         await expect(phoneNumberModal).toBeExisting();
-    })
+    }) */
 
-    it('should select supportive plan', async () => {
+/*    it('should select supportive plan', async () => {
         await browser.url(`/`);
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await browser.pause(2000);
-        const supportiveButton = await $(page.supportiveButton);
-        await supportiveButton.click();
-       
-        await expect(supportiveButton).toBeExisting();
+        await page.selectSupportivePlan();
+        const supportiveButton = $(page.supportiveButton);
+        browser.pause(2000);
+      // const supportiveButtonActive = $(page.supportiveButtonActive);
+       // await expect(supportiveButtonActive).toHaveClass("active");
+       await expect(supportiveButton).toBeEnabled();
+        
+        //Figure out why the double parens were needed..
+        //Move this to initate  after phone stuff
 
-    })
+    }) */
 
-    it('should save the phone', async () => {
+    
+         
+
+ /*   it('should save the phone', async () => {
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await page.selectSupportivePlan();
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await expect(await helper.getElementByText(phoneNumber)).toBeExisting();
         await browser.pause(10000);
     }) */
 
-   /* it('should add credit card', async () => {
+  /* it('should add credit card', async () => {
         //NEED TO AUTOMATE CARD NUM AND CVV
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await page.selectSupportivePlan();
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         
         await browser.pause(2000);
-        const paymentMethodButton = await $(page.paymentMethodButton);
-        await paymentMethodButton.waitForDisplayed();
-        await paymentMethodButton.scrollIntoView();
-        await paymentMethodButton.waitForClickable();
-        await paymentMethodButton.click();
-        const paymentModal = await $(page.paymentModal);
-        await paymentModal.waitForDisplayed();
-       
-        
-        const addCardButton = await $(page.addCardButton);
-        await addCardButton.click();
-        const addingCardModal = $(page.addingCardModal);
-        //await expect(addingCardModal).toBeExisting();
-
-        const cCNumberField = $(page.cCNumberField);
-        await cCNumberField.click();
-       // const cCNumber = $(helper.getCreditCardNumber);
-        //const cCNumberString = cCNumber.toString();
-        
-        await browser.pause(2000);
-        await cCNumberField.setValue("1234561232345234");
-        
-        await browser.pause(1000);
-        // CVV Field
-       
-       const cVVField = $(page.cVVField); 
-       await cVVField.waitForClickable;
-        await cVVField.click();
-       
-        await cVVField.setValue("48");
-        await browser.pause(1000);
-        const rootClick = $(page.root);
-        await rootClick.click();
-        
-        
-        const linkCardButton = $(page.linkCardButton);
-        await browser.pause(2000);
-        await linkCardButton.click();
-        await browser.pause(1000);
-        
-       const closeButton = $(page.closeButton);
-        await closeButton.click();
-
-
-        
+        await page.addCreditCard();
+        await browser.pause(3000);
+        const cardConfirmButton = $(page.cardConfirmButton);
+    
+        await expect(cardConfirmButton).toHaveText("Card");
 
     }) */
 
     
+/*
+  it('should write a message to driver', async () => {
+    await browser.url(`/`)
+     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+     await page.selectSupportivePlan();
+     const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+     await browser.pause(2000);
 
-  /* it('should write a message to driver', async () => {
+     await page.addCreditCard();
+     await browser.pause(1000);
+
+   
+   await page.writeMessageToDriver();
+   const driverMessage = $(page.driverMessage);
+
+   expect(driverMessage).toHaveText();
+    
+
+    await browser.pause(1000);
+}) 
+*/
+/*
+ it('should order Blanket And Hankerchief', async () => {
     await browser.url(`/`)
      await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
      await browser.pause(2000);
+     await page.selectSupportivePlan();
+     await page.selectSupportivePlan();
+     const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+        await browser.pause(2000);
 
-    const driverMessage = $(page.driverMessage);
-    await driverMessage.scrollIntoView();
-    await driverMessage.setValue("Thanks Driver!");
-    expect(driverMessage).toHaveText();
+     await page.addCreditCard();
+     await browser.pause(1000);
+     await page.writeMessageToDriver();
+        await page.orderBlanketAndHankercheifs();
+     const blanketHankey = $(page.blanketHankey);
+   await expect(blanketHankey).toBeChecked();
     
 
     await browser.pause(3000);
 }) */
 
-/*it('should order Blanket And Hankerchief', async () => {
-    await browser.url(`/`)
-     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-     await browser.pause(2000);
-     const supportiveButton = await $(page.supportiveButton);
-     await supportiveButton.click();
-     const orderReqs = $(page.orderReqs);
-     await orderReqs.scrollIntoView();
-     await orderReqs.click();
-     await browser.pause(10000);
-     const blanketHankey = $(page.blanketHankey);
-   await expect(blanketHankey).toBeChecked();
-    
 
-    await browser.pause(3000);
-})
-*/
-/*
 it('should order 2 ice creams', async () => {
     await browser.url(`/`)
      await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
      await browser.pause(2000);
-     const supportiveButton = await $(page.supportiveButton);
-     await supportiveButton.click();
-     const orderReqs = $(page.orderReqs);
-     await orderReqs.scrollIntoView();
-     await orderReqs.click();
+     await page.selectSupportivePlan();
+     const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+        await browser.pause(2000);
+
+     await page.addCreditCard();
+     await browser.pause(1000);
+     await page.writeMessageToDriver();
+     await page.orderBlanketAndHankercheifs();
+
      await browser.pause(3000);
-     const blanketHankey = $(page.blanketHankey);
-   await expect(blanketHankey).toBeChecked();
+     await page.orderBlanketAndHankercheifs;
 
    //ice creams order
-   const iceCreamCounter = $(page.iceCreamCounter);
-   await iceCreamCounter.click();
-   await iceCreamCounter.click();
-    await browser.pause(3000);
-})
-*/
+   const quantity = 2;
+   await page.orderIceCreams(2);
 
-it('should order open car search modal', async () => {
+    
+    const counterValue=$(page.counterValue);
+    const confirmQuantity = counterValue.getByText();
+    confirmQuantity.convertToString();
+    
+    await expect(counterValue).toHaveText(confirmQuantity);
+    // NEED AN EXPECT CLAUSE!
+
+   // const iceCreamQuantity = $(page.iceCreamQuantity);
+   //const iceCreamNumber=  await iceCreamQuanity.getText();
+   // await expect(iceCreamNumber).isEqual(quantity);
+
+    
+}) 
+
+
+/*it('should order open car search modal', async () => {
     await browser.url(`/`)
      await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
      await browser.pause(2000);
-     const supportiveButton = await $(page.supportiveButton);
-     await supportiveButton.click();
-     const orderReqs = $(page.orderReqs);
-     await orderReqs.scrollIntoView();
-     await orderReqs.click();
-     await browser.pause(3000);
-     const blanketHankey = $(page.blanketHankey);
-   await expect(blanketHankey).toBeChecked();
-
-   //ice creams order
-   const iceCreamCounter = $(page.iceCreamCounter);
-   await iceCreamCounter.click();
-   await iceCreamCounter.click();
+     await page.selectSupportivePlan();
+     await page.orderBlanketAndHankercheifs;
+    await page.orderIceCreams(3);
     await browser.pause(3000);
-})
+
+ //Needs to add fill in Credit inf0 to activate modal
+
+   //const enterOrderButton = $(page.enterOrderButton);
+  // await enterOrderButton.click(2);
+}) */
 
 }) 
 
@@ -193,11 +186,11 @@ Tests should cover the following:
 +Setting the address
 +Selecting Supportive plan
 +Filling in the phone number
-++++??Adding a credit card (Tip: the “link” button doesn’t become active until the card CVV field on the “Adding a card” modal id=”code” class=”card-input” loses focus. To change focus you can simulate the user pressing TAB or clicking somewhere else on the screen).
+???++++??Adding a credit card (Tip: the “link” button doesn’t become active until the card CVV field on the “Adding a card” modal id=”code” class=”card-input” loses focus. To change focus you can simulate the user pressing TAB or clicking somewhere else on the screen).
 +Writing a message for the driver
 +Ordering a Blanket and handkerchiefs (Tip: there are two selectors to be aware of here. One selector to click on and one to run expect on to verify that the state changed).
 +Ordering 2 Ice creams
-The car search modal appears
+???++++???The car search modal appears
 Waiting for the driver info to appear in the modal (optional) In addition to the steps above there is an optional step you can check. This one is a bit more tricky than the others but it’s good practice since you will likely encounter more difficult tasks in your career.
 
 TO DO: Write functions to remove redundancies.
