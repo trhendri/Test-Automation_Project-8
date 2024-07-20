@@ -140,43 +140,83 @@ it('should order 2 ice creams', async () => {
      await page.writeMessageToDriver();
      await page.orderBlanketAndHankercheifs();
 
-     await browser.pause(3000);
-     await page.orderBlanketAndHankercheifs;
+     
 
    //ice creams order
    const quantity = 2;
-   await page.orderIceCreams(2);
+   await page.orderIceCreams(quantity);
 
     
     const counterValue=$(page.counterValue);
-    const confirmQuantity = counterValue.getByText();
-    confirmQuantity.convertToString();
+    const confirmQuantity = counterValue.getHTML();
+   
     
-    await expect(counterValue).toHaveText(confirmQuantity);
+    await expect(confirmQuantity).toBe(quantity);
     // NEED AN EXPECT CLAUSE!
 
    // const iceCreamQuantity = $(page.iceCreamQuantity);
    //const iceCreamNumber=  await iceCreamQuanity.getText();
    // await expect(iceCreamNumber).isEqual(quantity);
 
-    
+
 }) 
 
-
-/*it('should order open car search modal', async () => {
+/*
+it('should open car search modal', async () => {
     await browser.url(`/`)
      await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
      await browser.pause(2000);
      await page.selectSupportivePlan();
-     await page.orderBlanketAndHankercheifs;
-    await page.orderIceCreams(3);
-    await browser.pause(3000);
+     const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+        await browser.pause(2000);
 
- //Needs to add fill in Credit inf0 to activate modal
+     await page.addCreditCard();
+     await browser.pause(1000);
+     await page.writeMessageToDriver();
+     await page.orderBlanketAndHankercheifs();
 
-   //const enterOrderButton = $(page.enterOrderButton);
-  // await enterOrderButton.click(2);
-}) */
+     await page.orderIceCreams(2);
+
+ // Click Enter Order Button
+
+
+
+  await page.submitOrder();
+  
+  // Wait for car Search Modal to exist
+  const carSearchModal = $(page.carSearchModal);
+  await carSearchModal.waitForDisplayed();
+  browser.pause(3000);
+  await expect(carSearchModal).toBeExisting();
+}) 
+
+
+it('should wait for Driver info to appear', async () => {
+    await browser.url(`/`)
+    await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+    await browser.pause(2000);
+    await page.selectSupportivePlan();
+    const phoneNumber = helper.getPhoneNumber("+1");
+       await page.submitPhoneNumber(phoneNumber);
+       await browser.pause(2000);
+
+    await page.addCreditCard();
+    await browser.pause(1000);
+    await page.writeMessageToDriver();
+    await page.orderBlanketAndHankercheifs();
+
+    await page.orderIceCreams(2);
+ await page.submitOrder();
+
+    // Wait for Driver Info 
+    const driverInfoModal = $(page.driverInfoModal);
+    await browser.pause(30000);
+    await driverInfoModal.waitForExist();
+    await expect(driverInfoModal).toBeDisplayed();
+
+})
+    */
 
 }) 
 
@@ -186,12 +226,12 @@ Tests should cover the following:
 +Setting the address
 +Selecting Supportive plan
 +Filling in the phone number
-???++++??Adding a credit card (Tip: the “link” button doesn’t become active until the card CVV field on the “Adding a card” modal id=”code” class=”card-input” loses focus. To change focus you can simulate the user pressing TAB or clicking somewhere else on the screen).
++Adding a credit card (Tip: the “link” button doesn’t become active until the card CVV field on the “Adding a card” modal id=”code” class=”card-input” loses focus. To change focus you can simulate the user pressing TAB or clicking somewhere else on the screen).
 +Writing a message for the driver
 +Ordering a Blanket and handkerchiefs (Tip: there are two selectors to be aware of here. One selector to click on and one to run expect on to verify that the state changed).
-+Ordering 2 Ice creams
-???++++???The car search modal appears
-Waiting for the driver info to appear in the modal (optional) In addition to the steps above there is an optional step you can check. This one is a bit more tricky than the others but it’s good practice since you will likely encounter more difficult tasks in your career.
++????Ordering 2 Ice creams
++The car search modal appears
++Waiting for the driver info to appear in the modal (optional) In addition to the steps above there is an optional step you can check. This one is a bit more tricky than the others but it’s good practice since you will likely encounter more difficult tasks in your career.
 
 TO DO: Write functions to remove redundancies.
 */

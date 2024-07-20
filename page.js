@@ -25,7 +25,8 @@ module.exports = {
     orderReqs: '.r-sw',
     iceCreamCounter: '.counter-plus',
     iceCreamQuantity: '.r-counter .counter-value',
-    counterValue: '.r-counter .counter-value',
+    //counterValue: '.r .sub . r-type-counter .r-counter .counter .counter-value',
+    counterValue: '//div[@class="r-group"][2]',
   
 
     blanketHankey: '.switch-input',
@@ -35,6 +36,9 @@ module.exports = {
     phoneNumberModal: '.modal',
     paymentModal: '//div[starts-with(text(), "Payment")]',
     addingCardModal: '.head',
+    carSearchModal: '.order-progress',
+
+    driverInfoModal: '.order-number',
     // Functions
     fillAddresses: async function(from, to) {
         const fromField = await $(this.fromField);
@@ -166,6 +170,12 @@ addCreditCard: async function(creditCardNumber) {
     const driverMessage =$(this.driverMessage);
     await driverMessage.scrollIntoView();
     await driverMessage.setValue("Thanks Driver!!!");
+
+   },
+
+   submitOrder: async function() {
+    const enterOrderButton = $(this.enterOrderButton);
+    await enterOrderButton.click();
 
    }
 
