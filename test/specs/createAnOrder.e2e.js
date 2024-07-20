@@ -27,6 +27,8 @@ describe('Create an order', () => {
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await browser.pause(2000);
+
+        //Open Phone Number Modal
         const phoneNumberButton = await $(page.phoneNumberButton);
         await phoneNumberButton.waitForDisplayed();
         await phoneNumberButton.click();
@@ -38,22 +40,20 @@ describe('Create an order', () => {
         await browser.url(`/`);
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await browser.pause(2000);
+
+        //Select Supportive Plan
         await page.selectSupportivePlan();
         const supportiveButton = $(page.supportiveButton);
         browser.pause(2000);
-        // const supportiveButtonActive = $(page.supportiveButtonActive);
-        // await expect(supportiveButtonActive).toHaveClass("active");
         await expect(supportiveButton).toBeEnabled();
-
-        //Figure out why the double parens were needed..
-        //Move this to initate  after phone stuff
-
     })
 
     it('should save the phone', async () => {
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await page.selectSupportivePlan();
+
+        //Save Phone
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await expect(await helper.getElementByText(phoneNumber)).toBeExisting();
@@ -67,14 +67,13 @@ describe('Create an order', () => {
         await page.selectSupportivePlan();
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
-
         await browser.pause(2000);
+
+        //Add Card
         await page.addCreditCard();
         await browser.pause(3000);
         const cardConfirmButton = $(page.cardConfirmButton);
-
         await expect(cardConfirmButton).toHaveText("Card");
-
     })
 
 
@@ -91,8 +90,7 @@ describe('Create an order', () => {
 
         await page.writeMessageToDriver();
         const driverMessage = $(page.driverMessage);
-        expect(driverMessage).toHaveText();
-        
+        expect(driverMessage).toHaveText();    
     })
 
 
@@ -150,13 +148,9 @@ describe('Create an order', () => {
         await browser.pause(1000);
         await page.writeMessageToDriver();
         await page.orderBlanketAndHankercheifs();
-
         await page.orderIceCreams(2);
 
         // Click Enter Order Button
-
-
-
         await page.submitOrder();
 
         // Wait for car Search Modal to exist
@@ -175,12 +169,10 @@ describe('Create an order', () => {
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await browser.pause(2000);
-
         await page.addCreditCard();
         await browser.pause(1000);
         await page.writeMessageToDriver();
         await page.orderBlanketAndHankercheifs();
-
         await page.orderIceCreams(2);
         await page.submitOrder();
 
@@ -189,7 +181,6 @@ describe('Create an order', () => {
         await browser.pause(30000);
         await driverInfoModal.waitForExist();
         await expect(driverInfoModal).toBeDisplayed();
-
     })
 
 
