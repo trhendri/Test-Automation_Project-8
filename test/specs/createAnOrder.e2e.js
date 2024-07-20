@@ -71,7 +71,7 @@ describe('Create an order', () => {
 
         await page.writeMessageToDriver();
         const driverMessage = $(page.driverMessage);
-        expect(driverMessage).toHaveText();    
+        await expect(driverMessage).toHaveText();    
     })
 
 
