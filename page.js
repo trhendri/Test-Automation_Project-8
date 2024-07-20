@@ -4,18 +4,18 @@ module.exports = {
     toField: '#to',
     phoneNumberField: '#phone',
     codeField: '#code',
-    cCNumberField:'#number',
+    cCNumberField: '#number',
     cVVField: '.card-second-row #code',
     driverMessage: '#comment',
-    
+
     // Buttons
     callATaxiButton: 'button=Call a taxi',
     phoneNumberButton: '//div[starts-with(text(), "Phone number")]',
     nextButton: 'button=Next',
     confirmButton: 'button=Confirm',
-   supportiveButton: 'div=Supportive',
-//supportiveButtonActive: '[data-for="tariff-card-4"]',
-//supportiveButtonActive: '.tcard .active',
+    supportiveButton: 'div=Supportive',
+    //supportiveButtonActive: '[data-for="tariff-card-4"]',
+    //supportiveButtonActive: '.tcard .active',
     paymentMethodButton: '.pp-button',
     addCardButton: '.pp-plus-container',
     linkCardButton: 'button=Link',
@@ -24,14 +24,17 @@ module.exports = {
     closeButton: '.payment-picker .section.active .close-button',
     orderReqs: '.r-sw',
     iceCreamCounter: '.counter-plus',
-    iceCreamQuantity: '.r-counter .counter-value',
-    //counterValue: '.r .sub . r-type-counter .r-counter .counter .counter-value',
-    counterValue: '//div[@class="r-group"][2]',
-  
+    iceCreamQuantity: '.counter-value',
+    // counterValue: '//div[contains(text(),"Ice Cream")] .counter-value',
 
+    //'//div[contains(text(), "Ice Cream")]//div[@class="counter-value]'
+    // $x('//div[@class="counter-value"]')[1]
+
+    counterValue: '.counter-value',
+    //(//div[@class="counter-value"])[1]
     blanketHankey: '.switch-input',
     enterOrderButton: '.smart-button',
-    
+
     // Modals
     phoneNumberModal: '.modal',
     paymentModal: '//div[starts-with(text(), "Payment")]',
@@ -40,7 +43,7 @@ module.exports = {
 
     driverInfoModal: '.order-number',
     // Functions
-    fillAddresses: async function(from, to) {
+    fillAddresses: async function (from, to) {
         const fromField = await $(this.fromField);
         await fromField.setValue(from);
         const toField = await $(this.toField);
@@ -49,7 +52,7 @@ module.exports = {
         await callATaxiButton.waitForDisplayed();
         await callATaxiButton.click();
     },
-    fillPhoneNumber: async function(phoneNumber) {
+    fillPhoneNumber: async function (phoneNumber) {
         const phoneNumberButton = await $(this.phoneNumberButton);
         await phoneNumberButton.waitForDisplayed();
         await phoneNumberButton.click();
@@ -60,63 +63,63 @@ module.exports = {
         await phoneNumberField.setValue(phoneNumber);
     },
 
-addCreditCard: async function(creditCardNumber) {
-    // Open Modal
-    const paymentMethodButton = await $(this.paymentMethodButton);
-    await paymentMethodButton.waitForDisplayed();
-    await paymentMethodButton.waitForClickable();
-    await paymentMethodButton.click();
-    const paymentModal = await $(this.paymentModal);
-    await paymentModal.waitForDisplayed();
+    addCreditCard: async function (creditCardNumber) {
+        // Open Modal
+        const paymentMethodButton = await $(this.paymentMethodButton);
+        await paymentMethodButton.waitForDisplayed();
+        await paymentMethodButton.waitForClickable();
+        await paymentMethodButton.click();
+        const paymentModal = await $(this.paymentModal);
+        await paymentModal.waitForDisplayed();
 
-    // Click Add Card Button
+        // Click Add Card Button
 
-    const addCardButton = await $(this.addCardButton);
-    await addCardButton.click();
-    //await expect(addingCardModal).toBeExisting();
+        const addCardButton = await $(this.addCardButton);
+        await addCardButton.click();
+        //await expect(addingCardModal).toBeExisting();
 
-    // Add Credit Card Number
-    const cCNumberField = $(this.cCNumberField);
-    await cCNumberField.click();
+        // Add Credit Card Number
+        const cCNumberField = $(this.cCNumberField);
+        await cCNumberField.click();
 
-    await browser.pause(1000);
-    await cCNumberField.setValue("1234123412341234");
-    await browser.pause(1000);
+        await browser.pause(1000);
+        await cCNumberField.setValue("1234123412341234");
+        await browser.pause(1000);
 
-    //Add CVV Number
+        //Add CVV Number
 
-    const cVVField = $(this.cVVField);
-    await cVVField.waitforClickable;
-    await cVVField.click();
-    await cVVField.setValue("48");
-    await browser.pause(1000);
-    const rootClick = $(this.root);
-    await rootClick.click();
+        const cVVField = $(this.cVVField);
+        await cVVField.waitforClickable;
+        await cVVField.click();
+        await cVVField.setValue("48");
+        await browser.pause(1000);
+        const rootClick = $(this.root);
+        await rootClick.click();
 
-    //Link Card Button
-    const linkCardButton = $(this.linkCardButton);
-    await browser.pause(1000);
-    await linkCardButton.click();
-    await browser.pause(1000);
+        //Link Card Button
+        const linkCardButton = $(this.linkCardButton);
+        await browser.pause(1000);
+        await linkCardButton.click();
+        await browser.pause(1000);
 
-    const closeButton = $(this.closeButton);
-    await closeButton.click();
+        const closeButton = $(this.closeButton);
+        await closeButton.click();
+
+
+
+
+
+    },
+
+    /*submitCreditCard: async function (creditCardNumber) {
+        await this.fillCreditCard(creditCardNumber);
+        await browser.pause(2000);
+        await this.cCNumberField.setValue(creditCardNumber)
     
+    },*/
 
 
-
-
-},
-
-/*submitCreditCard: async function (creditCardNumber) {
-    await this.fillCreditCard(creditCardNumber);
-    await browser.pause(2000);
-    await this.cCNumberField.setValue(creditCardNumber)
-
-},*/
-
-
-    submitPhoneNumber: async function(phoneNumber) {
+    submitPhoneNumber: async function (phoneNumber) {
         await this.fillPhoneNumber(phoneNumber);
         // we are starting interception of request from the moment of method call
         await browser.setupInterceptor();
@@ -134,61 +137,61 @@ addCreditCard: async function(creditCardNumber) {
         await $(this.confirmButton).click()
     },
 
-   // fillCreditCard: aync function(credit){
+    // fillCreditCard: aync function(credit){
 
-   // }
+    // }
 
-   orderIceCreams: async function(quantity) {
-    const iceCreamCounter = $(this.iceCreamCounter);
-   
-    for (let i = 0; i <= quantity; i++) {
-        await iceCreamCounter.click();
+    orderIceCreams: async function (quantity) {
+        const iceCreamCounter = $(this.iceCreamCounter);
+
+        for (let i = 0; i <= quantity; i++) {
+            await iceCreamCounter.click();
+        }
+
+    },
+
+
+    orderBlanketAndHankercheifs: async function () {
+
+        const orderReqs = $(this.orderReqs);
+        await orderReqs.scrollIntoView();
+        await orderReqs.click();
+        await browser.pause(1000);
+
+
+
+
+    },
+
+    selectSupportivePlan: async function () {
+
+        const supportiveButton = $(this.supportiveButton);
+        await supportiveButton.click();
+    },
+
+    writeMessageToDriver: async function () {
+        const driverMessage = $(this.driverMessage);
+        await driverMessage.scrollIntoView();
+        await driverMessage.setValue("Thanks Driver!!!");
+
+    },
+
+    submitOrder: async function () {
+        const enterOrderButton = $(this.enterOrderButton);
+        await enterOrderButton.click();
+
     }
 
-   },
 
 
-   orderBlanketAndHankercheifs: async function() {
-
-    const orderReqs = $(this.orderReqs);
-    await orderReqs.scrollIntoView();
-    await orderReqs.click();
-    await browser.pause(1000);
-    
-    
-   
-
-   },
-
-   selectSupportivePlan: async function() {
-
-    const supportiveButton = $(this.supportiveButton);
-    await supportiveButton.click();
-   },
-
-   writeMessageToDriver: async function() {
-    const driverMessage =$(this.driverMessage);
-    await driverMessage.scrollIntoView();
-    await driverMessage.setValue("Thanks Driver!!!");
-
-   },
-
-   submitOrder: async function() {
-    const enterOrderButton = $(this.enterOrderButton);
-    await enterOrderButton.click();
-
-   }
-
-
-
-   // FIGURE OUT HOW TO MAKE A DEFAULT OFF TOGGLE FOR BLANKET
-  /* checkBlanketHankeyToggle: async function() {
-    const blanketHankey = $(this.blanketHankey);
-    const isEnabled = await blanketHankey.toBeChecked();
-    if (blanketHankey == !isEnabled ){
-        $(this.orderReqs).click();
-    }
-   }*/
+    // FIGURE OUT HOW TO MAKE A DEFAULT OFF TOGGLE FOR BLANKET
+    /* checkBlanketHankeyToggle: async function() {
+      const blanketHankey = $(this.blanketHankey);
+      const isEnabled = await blanketHankey.toBeChecked();
+      if (blanketHankey == !isEnabled ){
+          $(this.orderReqs).click();
+      }
+     }*/
 
 
 

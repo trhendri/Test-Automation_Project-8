@@ -19,11 +19,11 @@ describe('My locators application', () => {
     })
 })  */
 
- const page = require('../../page');
+const page = require('../../page');
 const helper = require('../../helper')
 
 describe('Create an order', () => {
-    /* it('should open phone number modal', async () => {
+    it('should open phone number modal', async () => {
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await browser.pause(2000);
@@ -32,28 +32,25 @@ describe('Create an order', () => {
         await phoneNumberButton.click();
         const phoneNumberModal = await $(page.phoneNumberModal);
         await expect(phoneNumberModal).toBeExisting();
-    }) */
+    })
 
-/*    it('should select supportive plan', async () => {
+    it('should select supportive plan', async () => {
         await browser.url(`/`);
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await browser.pause(2000);
         await page.selectSupportivePlan();
         const supportiveButton = $(page.supportiveButton);
         browser.pause(2000);
-      // const supportiveButtonActive = $(page.supportiveButtonActive);
-       // await expect(supportiveButtonActive).toHaveClass("active");
-       await expect(supportiveButton).toBeEnabled();
-        
+        // const supportiveButtonActive = $(page.supportiveButtonActive);
+        // await expect(supportiveButtonActive).toHaveClass("active");
+        await expect(supportiveButton).toBeEnabled();
+
         //Figure out why the double parens were needed..
         //Move this to initate  after phone stuff
 
-    }) */
+    })
 
-    
-         
-
- /*   it('should save the phone', async () => {
+    it('should save the phone', async () => {
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await page.selectSupportivePlan();
@@ -61,164 +58,142 @@ describe('Create an order', () => {
         await page.submitPhoneNumber(phoneNumber);
         await expect(await helper.getElementByText(phoneNumber)).toBeExisting();
         await browser.pause(10000);
-    }) */
+    })
 
-  /* it('should add credit card', async () => {
+    it('should add credit card', async () => {
         //NEED TO AUTOMATE CARD NUM AND CVV
         await browser.url(`/`)
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await page.selectSupportivePlan();
         const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
-        
+
         await browser.pause(2000);
         await page.addCreditCard();
         await browser.pause(3000);
         const cardConfirmButton = $(page.cardConfirmButton);
-    
+
         await expect(cardConfirmButton).toHaveText("Card");
 
-    }) */
+    })
 
-    
-/*
-  it('should write a message to driver', async () => {
-    await browser.url(`/`)
-     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-     await page.selectSupportivePlan();
-     const phoneNumber = helper.getPhoneNumber("+1");
-        await page.submitPhoneNumber(phoneNumber);
-     await browser.pause(2000);
 
-     await page.addCreditCard();
-     await browser.pause(1000);
 
-   
-   await page.writeMessageToDriver();
-   const driverMessage = $(page.driverMessage);
-
-   expect(driverMessage).toHaveText();
-    
-
-    await browser.pause(1000);
-}) 
-*/
-/*
- it('should order Blanket And Hankerchief', async () => {
-    await browser.url(`/`)
-     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-     await browser.pause(2000);
-     await page.selectSupportivePlan();
-     await page.selectSupportivePlan();
-     const phoneNumber = helper.getPhoneNumber("+1");
+    it('should write a message to driver', async () => {
+        await browser.url(`/`)
+        await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await page.selectSupportivePlan();
+        const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await browser.pause(2000);
+        await page.addCreditCard();
+        await browser.pause(1000);
 
-     await page.addCreditCard();
-     await browser.pause(1000);
-     await page.writeMessageToDriver();
+        await page.writeMessageToDriver();
+        const driverMessage = $(page.driverMessage);
+        expect(driverMessage).toHaveText();
+        
+    })
+
+
+    it('should order Blanket And Hankerchief', async () => {
+        await browser.url(`/`)
+        await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await browser.pause(2000);
+        await page.selectSupportivePlan();
+        await page.selectSupportivePlan();
+        const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+        await browser.pause(2000);
+        await page.addCreditCard();
+        await browser.pause(1000);
+        await page.writeMessageToDriver();
+
         await page.orderBlanketAndHankercheifs();
-     const blanketHankey = $(page.blanketHankey);
-   await expect(blanketHankey).toBeChecked();
-    
-
-    await browser.pause(3000);
-}) */
+        const blanketHankey = $(page.blanketHankey);
+        await expect(blanketHankey).toBeChecked();
+        await browser.pause(3000);
+    })
 
 
-it('should order 2 ice creams', async () => {
-    await browser.url(`/`)
-     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-     await browser.pause(2000);
-     await page.selectSupportivePlan();
-     const phoneNumber = helper.getPhoneNumber("+1");
+    it('should order 2 ice creams', async () => {
+        await browser.url(`/`)
+        await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await browser.pause(2000);
+        await page.selectSupportivePlan();
+        const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitPhoneNumber(phoneNumber);
+        await browser.pause(2000);
+        await page.addCreditCard();
+        await browser.pause(1000);
+        await page.writeMessageToDriver();
+        await page.orderBlanketAndHankercheifs();
+
+        //ice creams order
+        const quantity = 2;
+        await page.orderIceCreams(quantity);
+        const counterValue = await $(page.counterValue).getText();
+         await expect(counterValue).toBe(quantity.toString());
+    })
+
+
+    it('should open car search modal', async () => {
+        await browser.url(`/`)
+        await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await browser.pause(2000);
+        await page.selectSupportivePlan();
+        const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await browser.pause(2000);
 
-     await page.addCreditCard();
-     await browser.pause(1000);
-     await page.writeMessageToDriver();
-     await page.orderBlanketAndHankercheifs();
+        await page.addCreditCard();
+        await browser.pause(1000);
+        await page.writeMessageToDriver();
+        await page.orderBlanketAndHankercheifs();
 
-     
+        await page.orderIceCreams(2);
 
-   //ice creams order
-   const quantity = 2;
-   await page.orderIceCreams(quantity);
-
-    
-    const counterValue=$(page.counterValue);
-    const confirmQuantity = counterValue.getHTML();
-   
-    
-    await expect(confirmQuantity).toBe(quantity);
-    // NEED AN EXPECT CLAUSE!
-
-   // const iceCreamQuantity = $(page.iceCreamQuantity);
-   //const iceCreamNumber=  await iceCreamQuanity.getText();
-   // await expect(iceCreamNumber).isEqual(quantity);
+        // Click Enter Order Button
 
 
-}) 
 
-/*
-it('should open car search modal', async () => {
-    await browser.url(`/`)
-     await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-     await browser.pause(2000);
-     await page.selectSupportivePlan();
-     const phoneNumber = helper.getPhoneNumber("+1");
+        await page.submitOrder();
+
+        // Wait for car Search Modal to exist
+        const carSearchModal = $(page.carSearchModal);
+        await carSearchModal.waitForDisplayed();
+        browser.pause(3000);
+        await expect(carSearchModal).toBeExisting();
+    })
+
+
+    it('should wait for Driver info to appear', async () => {
+        await browser.url(`/`)
+        await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
+        await browser.pause(2000);
+        await page.selectSupportivePlan();
+        const phoneNumber = helper.getPhoneNumber("+1");
         await page.submitPhoneNumber(phoneNumber);
         await browser.pause(2000);
 
-     await page.addCreditCard();
-     await browser.pause(1000);
-     await page.writeMessageToDriver();
-     await page.orderBlanketAndHankercheifs();
+        await page.addCreditCard();
+        await browser.pause(1000);
+        await page.writeMessageToDriver();
+        await page.orderBlanketAndHankercheifs();
 
-     await page.orderIceCreams(2);
+        await page.orderIceCreams(2);
+        await page.submitOrder();
 
- // Click Enter Order Button
+        // Wait for Driver Info 
+        const driverInfoModal = $(page.driverInfoModal);
+        await browser.pause(30000);
+        await driverInfoModal.waitForExist();
+        await expect(driverInfoModal).toBeDisplayed();
 
+    })
 
-
-  await page.submitOrder();
-  
-  // Wait for car Search Modal to exist
-  const carSearchModal = $(page.carSearchModal);
-  await carSearchModal.waitForDisplayed();
-  browser.pause(3000);
-  await expect(carSearchModal).toBeExisting();
-}) 
-
-
-it('should wait for Driver info to appear', async () => {
-    await browser.url(`/`)
-    await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
-    await browser.pause(2000);
-    await page.selectSupportivePlan();
-    const phoneNumber = helper.getPhoneNumber("+1");
-       await page.submitPhoneNumber(phoneNumber);
-       await browser.pause(2000);
-
-    await page.addCreditCard();
-    await browser.pause(1000);
-    await page.writeMessageToDriver();
-    await page.orderBlanketAndHankercheifs();
-
-    await page.orderIceCreams(2);
- await page.submitOrder();
-
-    // Wait for Driver Info 
-    const driverInfoModal = $(page.driverInfoModal);
-    await browser.pause(30000);
-    await driverInfoModal.waitForExist();
-    await expect(driverInfoModal).toBeDisplayed();
 
 })
-    */
-
-}) 
 
 /*
 Tests should cover the following:
