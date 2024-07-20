@@ -1,23 +1,4 @@
-/* Test run with npm run wdio to check everythings working
-describe('My locators application', () => {
-    it('should have locators', async () => {
-        //css locators
-        await browser.url(`https://cnt-25a16d8d-49f2-4698-886f-8a8673a8b556.containerhub.tripleten-services.com/`);
-                await expect($('.dst-picker')).toBeExisting();
-        await expect($('#root')).toBeExisting();
-        await expect($('label')).toBeExisting();
-        await expect($('[alt="Routes"]')).toBeExisting();
-        //xpath locators
-        await expect($('//a')).toBeExisting();
-        await expect($('//input[@type="text"]')).toBeExisting();
-        await expect($('//form/div[1]/div[2]')).toBeExisting();
-        await expect($('//*[@class="input-container"]')).toBeExisting();
-        await expect($('//div[@class="logo"]//img')).toBeExisting();
-        await expect($('//div[@class="input-container"]//input[@id="from"]')).toBeExisting();
-        await expect($('//label[contains(text(), "From")]')).toBeExisting();
-        await expect($('//label[starts-with(text(), "F")]')).toBeExisting();
-    })
-})  */
+
 
 const page = require('../../page');
 const helper = require('../../helper')
