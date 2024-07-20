@@ -1,4 +1,5 @@
 module.exports = {
+    
     // Inputs
     fromField: '#from',
     toField: '#to',
@@ -14,8 +15,6 @@ module.exports = {
     nextButton: 'button=Next',
     confirmButton: 'button=Confirm',
     supportiveButton: 'div=Supportive',
-    //supportiveButtonActive: '[data-for="tariff-card-4"]',
-    //supportiveButtonActive: '.tcard .active',
     paymentMethodButton: '.pp-button',
     addCardButton: '.pp-plus-container',
     linkCardButton: 'button=Link',
@@ -25,13 +24,7 @@ module.exports = {
     orderReqs: '.r-sw',
     iceCreamCounter: '.counter-plus',
     iceCreamQuantity: '.counter-value',
-    // counterValue: '//div[contains(text(),"Ice Cream")] .counter-value',
-
-    //'//div[contains(text(), "Ice Cream")]//div[@class="counter-value]'
-    // $x('//div[@class="counter-value"]')[1]
-
     counterValue: '.counter-value',
-    //(//div[@class="counter-value"])[1]
     blanketHankey: '.switch-input',
     enterOrderButton: '.smart-button',
 
@@ -40,8 +33,8 @@ module.exports = {
     paymentModal: '//div[starts-with(text(), "Payment")]',
     addingCardModal: '.head',
     carSearchModal: '.order-progress',
-
     driverInfoModal: '.order-number',
+
     // Functions
     fillAddresses: async function (from, to) {
         const fromField = await $(this.fromField);
@@ -52,6 +45,12 @@ module.exports = {
         await callATaxiButton.waitForDisplayed();
         await callATaxiButton.click();
     },
+
+    selectSupportivePlan: async function () {
+        const supportiveButton = $(this.supportiveButton);
+        await supportiveButton.click();
+    },
+
     fillPhoneNumber: async function (phoneNumber) {
         const phoneNumberButton = await $(this.phoneNumberButton);
         await phoneNumberButton.waitForDisplayed();
@@ -61,6 +60,24 @@ module.exports = {
         const phoneNumberField = await $(this.phoneNumberField);
         await phoneNumberField.waitForDisplayed();
         await phoneNumberField.setValue(phoneNumber);
+    },
+
+    submitPhoneNumber: async function (phoneNumber) {
+        await this.fillPhoneNumber(phoneNumber);
+        // we are starting interception of request from the moment of method call
+        await browser.setupInterceptor();
+        await $(this.nextButton).click();
+        // we should wait for response
+        // eslint-disable-next-line wdio/no-pause
+        await browser.pause(2000);
+        const codeField = await $(this.codeField);
+        // collect all responses
+        const requests = await browser.getRequests();
+        // use first response
+        await expect(requests.length).toBe(1);
+        const code = await requests[0].response.body.code;
+        await codeField.setValue(code)
+        await $(this.confirmButton).click()
     },
 
     addCreditCard: async function (creditCardNumber) {
@@ -73,7 +90,6 @@ module.exports = {
         await paymentModal.waitForDisplayed();
 
         // Click Add Card Button
-
         const addCardButton = await $(this.addCardButton);
         await addCardButton.click();
         //await expect(addingCardModal).toBeExisting();
@@ -104,69 +120,6 @@ module.exports = {
 
         const closeButton = $(this.closeButton);
         await closeButton.click();
-
-
-
-
-
-    },
-
-    /*submitCreditCard: async function (creditCardNumber) {
-        await this.fillCreditCard(creditCardNumber);
-        await browser.pause(2000);
-        await this.cCNumberField.setValue(creditCardNumber)
-    
-    },*/
-
-
-    submitPhoneNumber: async function (phoneNumber) {
-        await this.fillPhoneNumber(phoneNumber);
-        // we are starting interception of request from the moment of method call
-        await browser.setupInterceptor();
-        await $(this.nextButton).click();
-        // we should wait for response
-        // eslint-disable-next-line wdio/no-pause
-        await browser.pause(2000);
-        const codeField = await $(this.codeField);
-        // collect all responses
-        const requests = await browser.getRequests();
-        // use first response
-        await expect(requests.length).toBe(1)
-        const code = await requests[0].response.body.code
-        await codeField.setValue(code)
-        await $(this.confirmButton).click()
-    },
-
-    // fillCreditCard: aync function(credit){
-
-    // }
-
-    orderIceCreams: async function (quantity) {
-        const iceCreamCounter = $(this.iceCreamCounter);
-
-        for (let i = 0; i <= quantity; i++) {
-            await iceCreamCounter.click();
-        }
-
-    },
-
-
-    orderBlanketAndHankercheifs: async function () {
-
-        const orderReqs = $(this.orderReqs);
-        await orderReqs.scrollIntoView();
-        await orderReqs.click();
-        await browser.pause(1000);
-
-
-
-
-    },
-
-    selectSupportivePlan: async function () {
-
-        const supportiveButton = $(this.supportiveButton);
-        await supportiveButton.click();
     },
 
     writeMessageToDriver: async function () {
@@ -176,27 +129,25 @@ module.exports = {
 
     },
 
+    orderBlanketAndHankercheifs: async function () {
+        const orderReqs = $(this.orderReqs);
+        await orderReqs.scrollIntoView();
+        await orderReqs.click();
+        await browser.pause(1000);
+    },
+
+    orderIceCreams: async function (quantity) {
+        const iceCreamCounter = $(this.iceCreamCounter);
+        for (let i = 0; i <= quantity; i++) {
+            await iceCreamCounter.click();
+        }
+    },
+
     submitOrder: async function () {
         const enterOrderButton = $(this.enterOrderButton);
         await enterOrderButton.click();
-
     }
-
-
-
-    // FIGURE OUT HOW TO MAKE A DEFAULT OFF TOGGLE FOR BLANKET
-    /* checkBlanketHankeyToggle: async function() {
-      const blanketHankey = $(this.blanketHankey);
-      const isEnabled = await blanketHankey.toBeChecked();
-      if (blanketHankey == !isEnabled ){
-          $(this.orderReqs).click();
-      }
-     }*/
-
-
-
 
 
 };
 
-//getCreditCardNumber
