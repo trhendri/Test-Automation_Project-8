@@ -60,7 +60,7 @@ describe('Create an order', () => {
 
 
     it('should write a message to driver', async () => {
-        await browser.url(`/`)
+        await browser.url(`/`);
         await page.fillAddresses('East 2nd Street, 601', '1300 1st St');
         await page.selectSupportivePlan();
         const phoneNumber = helper.getPhoneNumber("+1");
@@ -69,9 +69,12 @@ describe('Create an order', () => {
         await page.addCreditCard();
         await browser.pause(1000);
 
+        
+        
         await page.writeMessageToDriver();
-        const driverMessage = $(page.driverMessage);
-        await expect(driverMessage).toHaveText();    
+        await browser.pause(1000);
+        const driverMessage = await $(page.driverMessage).getValue();
+        await expect(driverMessage).toBe("Thanks Driver!!");    
     })
 
 

@@ -122,11 +122,10 @@ module.exports = {
         await closeButton.click();
     },
 
-    writeMessageToDriver: async function () {
+    writeMessageToDriver: async function (message) {
         const driverMessage = $(this.driverMessage);
         await driverMessage.scrollIntoView();
-        await driverMessage.setValue("Thanks Driver!!!");
-
+        await driverMessage.setValue("Thanks Driver!!");
     },
 
     orderBlanketAndHankercheifs: async function () {
